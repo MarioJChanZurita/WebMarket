@@ -1,0 +1,190 @@
+TOPICS:
+Styling and templates 
+Sending data to templates 
+Templates inheritance 
+Models and databases 
+Project restructure 
+Model realtionships
+Flask forms 
+Flask validations
+Flashes and Advanced Validations 
+User authentication 
+Logout and customizations 
+SPECIFIC OF THE PROJECT:
+Item purchasing 
+Item selling 
+
+
+Debug mode: on //just when we are developing
+Debug mode: off //when we deploy our application
+
+set FLASK_APP=market.py
+set FLASK_DEBUG=1
+flask run 
+
+Dynamics routes
+@app.route('/about/<username>')
+def about_page(username):
+    return f'<h1>This is the about page of {username}</h1>'
+
+importancion de bootstrap en html 
+
+2 routes for a single html 
+
+
+Dont uppercase for functions name 
+Explicit all the names Ex: No products, YES product_detail_view
+
+
+Template Inheritance
+
+
+pip install flask-sqlalchemy
+allow us to write database tables with python classes
+
+Model -> Class that its converted to database (database classes)
+
+
+NOTES:
+Consider always the venv 
+
+
+URI(UniformResourceIdentifier)->  permite tanto identificar como localizar cada recurso ya que dentro 
+	de esta se encuentra a su vez la URL, por lo que puede cumplir ambas funciones.
+URL(UniformResourceLink)-> funciona como un localizador que dice donde encontrar el elemento.
+
+--------------------------------------------------------------
+CREATE DB SQLite:
+from market import db
+db.create_all()
+
+item1 = Item(name="Macbook", price=1000, barcode="32334342323", description="description")
+db.session.add(item1)
+db.session.commit()
+
+Item.query.filter_by(condition)
+for item in Item.query.all():
+...	item.name
+
+------------------------------------------------------------
+
+Every python package will have his own __init__
+->Before it loads what you want to import at your file, it will execute
+the particular file 
+
+NOTES:
+When we import one file, python is going to try to execute line by line what 
+its inside that file 
+
+Package everything whit his __init__ file 
+Create run.py to execute 
+
+
+-----------------------------------------------------
+
+>>> db.session.rollback()
+>>> item1.owner = User.query.filter_by(username='Mario').first().id
+>>> db.session.add(item1)
+>>> db.session.commit()
+>>> for item in Item.query.all():
+...     item.name
+...
+'Iphone 12'
+'Laptop'
+>>> for user in User.query.filter_by(username='Mario'):
+...     user.username
+...     user.items
+...
+'Mario'
+[Item Iphone 12]
+>>>  
+
+-------------------------------------------------------
+
+
+NOTE:
+backref
+
+Indicates the string name of a property to be placed on the related mapper’s 
+class that will handle this relationship in the other direction. The other 
+property will be created automatically when the mappers are configured. Can 
+also be passed as a backref() object to control the configuration of the new 
+relationship.
+
+
+pip install flask-wtf //flask forms 
+pip install wtforms 
+
+
+
+-THE ORDER OF THE LINES IS IMPORTANT. EX -> __init__.py
+-OR WE WORK ON AN venv OR not but not both 
+
+
+POST ->Request its going to affect the data in the database
+GET -> Its to get data from the database (se almacenan en todas partes por rasones de cache)
+PUT
+DELETE
+
+
+form.validate_on_submit() //1->Checks if data matches 
+				2->Checks that data its validated 
+In case of some error it will be store here
+->form.errors
+
+
+NOT GOOD IDEA TO HARDCODE ARGUMENTS AS URLs
+
+Cross Site Request Forgery (CSRF)
+
+
+
+FALSH its a function that allow us to display all the given information inside
+the html template, so you are able to show error of valifations for example.
+
+CONTEXT MANAGER
+
+
+
+(ITS IMPORTANT THE NAME OF THE FUNCTIONS)
+FlaskForm //is going to look for every function called validate_username
+and then its going to look for the field called in the same way, in this 
+case its username.
+
+
+
+PASSWORD ENCRYPTATION 
+pip install flask_bcrypt
+
+
+CHECK -> {{ form.hidden_tag() }}
+
+
+pip install flask_login 
+
+
+.first() //Its to get a the return an object 
+
+
+.user_loader //reload the user by his id returning the user with the respective
+		id, this is done basiclly to reload and check is te user is logged
+		for each different page. Its used every time we load a different 
+		page.
+
+
+
+UserMixin adds the methods that flask-login ask us to work correctly. This
+its added trough inheritance instead of try to harcode it.
+
+
+FORMS
+We create a 
+-> Instance 
+-> We sent the instance as the context to the html 
+
+
+
+STUDY DECORATORS 
+
+Are functions that execute before the actual function.
+
